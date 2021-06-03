@@ -1,2 +1,2 @@
 # article-nta-dask
-Репозиторий выступает хранилищем вычислительных эксперементов с библиотекой Dask.
+This repository is a storage for numeric experiments based on Dusk library.
