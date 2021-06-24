@@ -8,7 +8,6 @@ import argparse
 import sys
 import time
 
-@dask.delayed
 def generateData(size: int):
     """
     This function generated syntetic transaction by client 
@@ -27,15 +26,15 @@ def generateData(size: int):
     return df
 
 def generateBatch(size):
-    batch = dd.from_delayed(generateData(size=size))
+    batch = generateData(size=size)
     return batch
 
 def main(args):
     os.chdir(args.path)
     header = True
     for _ in trange(args.size):
-        tempdf = generateBatch()
-        tempdf.compute().to_csv(args.filename+".csv", mode="a", header=header, index=False)
+        tempdf = generateBatch(args.batchsize)
+        tempdf.to_csv(args.filename+".csv", mode="a", header=header, index=False)
         header = False
 
 def argsParser():
@@ -49,9 +48,9 @@ def argsParser():
 if __name__=="__main__":
     parser = argsParser()
     args = parser.parse_args(sys.argv[1:])
-    print(f"memory usage: {generateBatch(args.batchsize).compute().memory_usage(index=True,deep=True).sum()/1024/1024}")
-    # start = time.time()
-    # main(args)
-    # end = time.time() - start
-    # print("finished.")
-    # print(f"processor time: {end}")
+    #print(f"memory usage: {generateBatch(args.batchsize).compute().memory_usage(index=True,deep=True).sum()/1024/1024}")
+    start = time.time()
+    main(args)
+    end = time.time() - start
+    print("finished.")
+    print(f"processor time: {end}")
