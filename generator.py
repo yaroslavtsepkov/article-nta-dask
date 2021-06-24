@@ -2,13 +2,12 @@ import pandas as pd
 import numpy as np 
 import dask.dataframe as dd
 import os
-import dask
 from tqdm import trange
 import argparse
 import sys
 import time
 
-def generateData(size: int):
+def generateData(size: int)->pd.DataFrame:
     """
     This function generated syntetic transaction by client 
     Args:
@@ -25,11 +24,23 @@ def generateData(size: int):
     })
     return df
 
-def generateBatch(size):
+def generateBatch(size: int)->pd.DataFrame:
+    """
+    generated data-batch
+    Args: 
+    size int-like
+    return:
+    data-batch
+    """
     batch = generateData(size=size)
     return batch
 
 def main(args):
+    """
+    this main function for script 
+    Args: 
+    options, show option [-h]
+    """
     os.chdir(args.path)
     header = True
     for _ in trange(args.size):
@@ -38,11 +49,16 @@ def main(args):
         header = False
 
 def argsParser():
+    """
+    This function get args from command line 
+    Args: None
+    Return: parser args
+    """
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s","--size",default=1, type=int)
-    parser.add_argument("-p","--path",default=os.getcwd(), type=str)
-    parser.add_argument("-f","--filename",default="temp",type=str)
-    parser.add_argument("-bs","--batchsize",default=1_000_000, type=int)
+    parser.add_argument("-s","--size",default=1, type=int, help="output file shape (s*bs)x4")
+    parser.add_argument("-p","--path",default=os.getcwd(), type=str, help="path where save file")
+    parser.add_argument("-f","--filename",default="temp",type=str, help="this option set filename, default filename [temp]")
+    parser.add_argument("-bs","--batchsize",default=1_000_000, type=int, help="size of batch, output file have 1 or many batch [option -s]")
     return parser
 
 if __name__=="__main__":
