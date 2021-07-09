@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np 
 import os
 from tqdm import trange
+from dask import dataframe as dd
+from dask import distributed 
 import argparse
 import sys
 import time
@@ -42,10 +44,13 @@ def main(args):
     """
     os.chdir(args.path)
     header = True
-    for _ in trange(args.size):
-        tempdf = generateBatch(args.batchsize)
-        tempdf.to_csv(args.filename+".csv", mode="a", header=header, index=False)
-        header = False
+    with distributed.Client() as client:
+        print(client)
+        for _ in trange(args.size):
+            tempdf = generateBatch(args.batchsize)
+            tempdf = dd.from_pandas(tempdf, npartitions=16)
+            tempdf.to_csv(args.filename+".csv", mode="a", header=header, index=False)
+            header = False
 
 def argsParser():
     """
