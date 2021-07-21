@@ -16,6 +16,7 @@ def main():
     xaxis = "filesize(mb)"
     yaxis = "process(mb/s)"
     varcolor = "tools"
+    interpol = "basis"
     with st.beta_container():
         st.altair_chart(
         alt.Chart(df, width=512).mark_circle(size=60).encode(
