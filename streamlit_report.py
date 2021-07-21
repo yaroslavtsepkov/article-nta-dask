@@ -17,6 +17,7 @@ def main():
     yaxis = "process(mb/s)"
     varcolor = "tools"
     interpol = "basis"
+    agg = "median"
     with st.beta_container():
         st.altair_chart(
         alt.Chart(df, width=512).mark_circle(size=60).encode(
