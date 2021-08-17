@@ -23,12 +23,12 @@ def main():
     with st.container():
         st.altair_chart(
             alt.Chart(df, width=512).mark_circle(size=60).encode(
-                x="process(mb/s)", y=yaxis, color=varcolor, tooltip=list(df)
+                x="filesize(mb)", y=yaxis, color=varcolor, tooltip=list(df)
             ).interactive(), False
         )
         st.altair_chart(
             alt.Chart(df, width=512).mark_line(size=3, interpolate=interpol).encode(
-                x="process(mb/s)",\
+                x="filesize(mb)",\
                 y='{}({})'.format(agg,yaxis), color=varcolor
             ).interactive()
         )
