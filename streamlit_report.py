@@ -24,7 +24,7 @@ def main():
         st.altair_chart(
             alt.Chart(df, width=512).mark_circle(size=60).encode(
                 x="filesize(mb)", y=yaxis, color=varcolor, tooltip=list(df)
-            ).interactive(), False
+            ).interactive()
         )
         st.altair_chart(
             alt.Chart(df, width=512).mark_line(size=3, interpolate=interpol).encode(
@@ -32,11 +32,7 @@ def main():
                 y='{}({})'.format(agg,yaxis), color=varcolor
             ).interactive()
         )
-        st.altair_chart(
-            alt.Chart(df, width=512).mark_bar().encode(
-                x="researcher",y="count({})".format(yaxis)
-            )
-        )
+        st.bar_chart(df[yaxis])
         with st.beta_expander("Набор данных"):
             st.dataframe(df)
             
