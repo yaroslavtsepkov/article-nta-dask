@@ -16,8 +16,8 @@ def main():
     with st.sidebar:
         st.header("Тут вы можете изменить настройки графиков")
         #xaxis = st.selectbox("Ось x","process(mb/s)")
-        yaxis = st.selectbox("Ось y",df.drop(columns="process(mb/s)").columns)
-        varcolor = st.selectbox("Как разделить наблюдения", df.drop(columns=["process(mb/s)",yaxis]).columns)
+        yaxis = st.selectbox("Ось y",df.drop(columns="filesize(mb)").columns)
+        varcolor = st.selectbox("Как разделить наблюдения", df.drop(columns=["filesize(mb)",yaxis]).columns)
         agg = st.selectbox("Агрегация", ["median", "mean"])
         interpol = st.selectbox("Интерполяция", ['basis', 'basis-open', 'basis-closed', 'bundle', 'cardinal', 'cardinal-open', 'cardinal-closed', 'catmull-rom', 'linear', 'linear-closed', 'monotone', 'natural', 'step', 'step-before', 'step-after'])
     with st.container():
@@ -31,6 +31,11 @@ def main():
                 x="filesize(mb)",\
                 y='{}({})'.format(agg,yaxis), color=varcolor
             ).interactive()
+        )
+        st.altair_chart(
+            alt.Chart(df, width=512).mark_bar().encode(
+                x="researcher",y="count({}".format(yaxis), color=varcolor
+            )
         )
         with st.beta_expander("Набор данных"):
             st.dataframe(df)
