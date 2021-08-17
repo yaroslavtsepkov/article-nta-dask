@@ -34,7 +34,7 @@ def main():
         )
         st.altair_chart(
             alt.Chart(df, width=512).mark_bar().encode(
-                x="researcher",y="count({}".format(yaxis)
+                x="researcher",y="count({})".format(yaxis)
             )
         )
         with st.beta_expander("Набор данных"):
