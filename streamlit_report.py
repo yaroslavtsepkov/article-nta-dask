@@ -9,13 +9,13 @@ def main():
     page_icon="🧊",
     layout="wide",
     initial_sidebar_state="expanded")
-    df = pd.read_csv("report.csv", sep=";")
+    df = pd.read_csv("report.csv", sep=",")
     with st.beta_container():
         st.title("Интерактивный отчет, сравнение Dask и Pandas")
         st.markdown("На данном отчете вы можете посмотреть взаимось любых данных нашего экспереминта")
     with st.sidebar:
         st.header("Тут вы можете изменить настройки графиков")
-        xaxis = st.selectbox("Ось x",df.columns)
+        xaxis = st.selectbox("Ось x","process(mb/s)")
         yaxis = st.selectbox("Ось y",df.drop(columns=[xaxis]).columns)
         varcolor = st.selectbox("Как разделить наблюдения", df.drop(columns=[xaxis,yaxis]).columns)
         agg = st.selectbox("Агрегация", ["median", "mean"])
