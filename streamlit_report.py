@@ -21,7 +21,6 @@ def main():
         agg = st.selectbox("Агрегация", ["median", "mean"])
         interpol = st.selectbox("Интерполяция", ['basis', 'basis-open', 'basis-closed', 'bundle', 'cardinal', 'cardinal-open', 'cardinal-closed', 'catmull-rom', 'linear', 'linear-closed', 'monotone', 'natural', 'step', 'step-before', 'step-after'])
     with st.container():
-        st.line_chart(df[["filesize(mb)",yaxis, varcolor]])
         st.altair_chart(
             alt.Chart(df, width=512).mark_circle(size=60).encode(
                 x="filesize(mb)", y=yaxis, color=varcolor, tooltip=list(df)
